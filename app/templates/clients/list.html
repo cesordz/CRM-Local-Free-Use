@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Directorio de Clientes{% endblock %}
+
+{% block content %}
+<div class="view-header">
+  <h1 class="view-title" data-testid="page-title">Directorio de Clientes</h1>
+  <a href="/clients/new" class="btn btn-primary" data-testid="add-client-btn">
+    Nuevo Cliente
+  </a>
+</div>
+
+<!-- Buscador de Texto Arriba -->
+<div class="search-container">
+  <form method="GET" action="/clients" class="search-form" data-testid="search-form">
+    <label for="search-query">Buscar por nombre:</label>
+    <input 
+      type="text" 
+      id="search-query" 
+      name="q" 
+      value="{{ search_query }}" 
+      placeholder="Escriba un nombre..." 
+      data-testid="search-input"
+      autocomplete="off"
+    >
+    <button type="submit" class="btn" data-testid="search-submit-btn">
+      Buscar
+    </button>
+    {% if search_query %}
+      <a href="/clients" class="btn" data-testid="search-clear-btn">
+        Limpiar
+      </a>
+    {% endif %}
+  </form>
+</div>
+
+<!-- Tabla de Clientes con Bordes de 1px y Filas Compactas -->
+<table class="util-table" data-testid="clients-table">
+  <thead>
+    <tr>
+      <th style="width: 25%;">Nombre</th>
+      <th style="width: 20%;">Empresa</th>
+      <th style="width: 25%;">Correo Electrónico</th>
+      <th style="width: 12%;">Teléfono</th>
+      <th style="width: 8%;">Notas</th>
+      <th style="width: 10%; text-align: right;">Acciones</th>
+    </tr>
+  </thead>
+  <tbody data-testid="clients-table-body">
+    {% if clients and clients|length > 0 %}
+      {% for client in clients %}
+        <tr data-testid="client-row-{{ client.id }}">
+          <td>
+            <a href="/clients/{{ client.id }}" data-testid="client-link-{{ client.id }}">
+              {{ client.name }}
+            </a>
+          </td>
+          <td data-testid="client-company-{{ client.id }}">
+            {{ client.company if client.company else "-" }}
+          </td>
+          <td data-testid="client-email-{{ client.id }}">
+            {{ client.email }}
+          </td>
+          <td data-testid="client-phone-{{ client.id }}">
+            {{ client.phone }}
+          </td>
+          <td data-testid="client-notes-count-{{ client.id }}">
+            {{ client.notes|length }}
+          </td>
+          <td style="text-align: right;">
+            <div class="table-actions" style="justify-content: flex-end;">
+              <a href="/clients/{{ client.id }}" class="btn" data-testid="view-client-{{ client.id }}">
+                Ver
+              </a>
+              <a href="/clients/{{ client.id }}/edit" class="btn" data-testid="edit-client-{{ client.id }}">
+                Editar
+              </a>
+              <form method="POST" action="/clients/{{ client.id }}/delete" onsubmit="return confirm('¿Confirmas eliminar este cliente y sus notas?');" style="display: inline;">
+                <button type="submit" class="btn btn-danger" data-testid="delete-client-{{ client.id }}">
+                  Borrar
+                </button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+    {% else %}
+      <tr data-testid="empty-clients-state">
+        <td colspan="6" class="empty-table-cell">
+          {% if search_query %}
+            No se encontraron resultados para el criterio "{{ search_query }}".
+          {% else %}
+            Aún no hay clientes registrados en el sistema.
+          {% endif %}
+        </td>
+      </tr>
+    {% endif %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,377 @@
+/* Cascadia Mono Local Font Definition */
+@font-face {
+  font-family: 'Cascadia Mono';
+  src: url('/static/fonts/CascadiaMono.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cascadia Mono';
+  src: url('/static/fonts/CascadiaMono-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Variables de Color Estrictas */
+:root {
+  --bg: #f5f3ef;
+  --text: #1e1e1e;
+  --border: #bdb8ae;
+  --accent: #3d5a6c;
+  --error: #9b2c2c;
+  --success: #3f6b45;
+  --input-bg: #ffffff;
+}
+
+/* Reset y Tipografía Base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-shadow: none !important;
+  transition: none !important;
+  animation: none !important;
+}
+
+body {
+  font-family: "Cascadia Mono", Consolas, "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* Enlaces */
+a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+/* Layout General */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Barra Superior Mínima */
+nav.topbar {
+  background-color: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 0;
+  margin-bottom: 1.5rem;
+}
+
+.topbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.nav-links a {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* Contenido Principal */
+main {
+  margin-bottom: 3rem;
+}
+
+/* Alertas y Mensajes de Estado */
+.alert-box {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 1.25rem;
+  font-size: 13px;
+}
+
+.alert-success {
+  border-color: var(--success);
+  color: var(--success);
+  background-color: var(--bg);
+}
+
+.alert-error {
+  border-color: var(--error);
+  color: var(--error);
+  background-color: var(--bg);
+}
+
+/* Encabezado de Página */
+.view-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.view-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* Botones: Solo Texto, Borde 1px, Sin Iconos ni Sombras */
+button,
+.btn {
+  display: inline-block;
+  font-family: inherit;
+  font-size: 13px;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+  color: var(--text);
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1.4;
+  vertical-align: middle;
+}
+
+button:hover,
+.btn:hover {
+  background-color: #ebe7e0;
+}
+
+/* Botón Principal (único uso permitido de --accent en botón) */
+.btn-primary {
+  border-color: var(--accent);
+  background-color: var(--accent);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: #2f4654;
+  border-color: #2f4654;
+}
+
+/* Botón de Borrado/Peligro (sin color brillante, texto o borde sutil) */
+.btn-danger {
+  border-color: var(--error);
+  color: var(--error);
+  background-color: var(--bg);
+}
+
+.btn-danger:hover {
+  background-color: #fce8e8;
+}
+
+/* Buscador de Texto */
+.search-container {
+  margin-bottom: 1rem;
+}
+
+.search-form {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.search-form label {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+/* Tablas Compactas con Bordes de 1px */
+table.util-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--border);
+  background-color: var(--bg);
+  font-size: 13px;
+}
+
+table.util-table th,
+table.util-table td {
+  border: 1px solid var(--border);
+  padding: 6px 8px;
+  text-align: left;
+}
+
+table.util-table th {
+  background-color: #ebe7e0;
+  font-weight: 700;
+  color: var(--text);
+}
+
+table.util-table tr:hover td {
+  background-color: #f0ede6;
+}
+
+.table-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+/* Estado Vacío */
+.empty-table-cell {
+  text-align: center;
+  padding: 1.5rem !important;
+  color: #555555;
+  font-style: italic;
+}
+
+/* Formularios Utilitarios */
+.form-container {
+  max-width: 550px;
+  border: 1px solid var(--border);
+  padding: 1.25rem;
+  background-color: var(--bg);
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  font-family: inherit;
+  font-size: 13px;
+  padding: 5px 7px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  background-color: var(--input-bg);
+  color: var(--text);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: 1px solid var(--accent);
+  border-color: var(--accent);
+}
+
+.form-group input.is-invalid,
+.form-group textarea.is-invalid {
+  border-color: var(--error);
+}
+
+/* Mensajes de Error en Texto debajo del Campo */
+.error-text {
+  color: var(--error);
+  font-size: 12px;
+  margin-top: 3px;
+  display: block;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+/* Vista de Detalle y Notas */
+.detail-layout {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .detail-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.detail-pane {
+  border: 1px solid var(--border);
+  padding: 1rem;
+  background-color: var(--bg);
+}
+
+.pane-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.prop-list {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 6px 8px;
+  font-size: 13px;
+}
+
+.prop-label {
+  font-weight: 700;
+  color: #444444;
+}
+
+.prop-value {
+  color: var(--text);
+  word-break: break-word;
+}
+
+.notes-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.note-item {
+  border: 1px solid var(--border);
+  padding: 0.65rem 0.85rem;
+  background-color: #faf9f6;
+}
+
+.note-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.35rem;
+  font-size: 11px;
+  color: #555555;
+}
+
+.note-body {
+  font-size: 13px;
+  color: var(--text);
+  white-space: pre-wrap;
+}
+
+/* Pie de Página Mínimo */
+footer.minimal-footer {
+  border-top: 1px solid var(--border);
+  padding: 1rem 0;
+  text-align: center;
+  font-size: 12px;
+  color: #555555;
+  margin-top: 3rem;
+}

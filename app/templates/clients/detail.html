@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Ficha: {{ client.name }}{% endblock %}
+
+{% block content %}
+<div class="view-header">
+  <div>
+    <h1 class="view-title" data-testid="client-detail-name">
+      Cliente #{{ client.id }}: {{ client.name }}
+    </h1>
+  </div>
+  <div style="display: flex; gap: 8px;">
+    <a href="/clients" class="btn" data-testid="back-to-clients-btn">
+      Volver
+    </a>
+    <a href="/clients/{{ client.id }}/edit" class="btn" data-testid="edit-client-header-btn">
+      Editar
+    </a>
+    <form method="POST" action="/clients/{{ client.id }}/delete" onsubmit="return confirm('¿Confirmas eliminar este cliente y todas sus notas?');" style="display: inline;">
+      <button type="submit" class="btn btn-danger" data-testid="delete-client-header-btn">
+        Eliminar
+      </button>
+    </form>
+  </div>
+</div>
+
+<div class="detail-layout">
+  <!-- Panel Izquierdo: Propiedades del Cliente -->
+  <div class="detail-pane" data-testid="client-info-card">
+    <h2 class="pane-title">Datos de Contacto</h2>
+    <div class="prop-list">
+      <span class="prop-label">ID:</span>
+      <span class="prop-value" data-testid="client-detail-id">{{ client.id }}</span>
+
+      <span class="prop-label">Nombre:</span>
+      <span class="prop-value" data-testid="client-detail-name-val">{{ client.name }}</span>
+
+      <span class="prop-label">Correo:</span>
+      <span class="prop-value" data-testid="client-detail-email">
+        <a href="mailto:{{ client.email }}">{{ client.email }}</a>
+      </span>
+
+      <span class="prop-label">Teléfono:</span>
+      <span class="prop-value" data-testid="client-detail-phone">{{ client.phone }}</span>
+
+      <span class="prop-label">Empresa:</span>
+      <span class="prop-value" data-testid="client-detail-company">
+        {{ client.company if client.company else "-" }}
+      </span>
+
+      <span class="prop-label">Alta:</span>
+      <span class="prop-value" data-testid="client-detail-created">
+        {{ client.created_at.strftime('%Y-%m-%d %H:%M:%S') if client.created_at else '-' }} UTC
+      </span>
+    </div>
+  </div>
+
+  <!-- Panel Derecho: Notas de Seguimiento -->
+  <div class="detail-pane" data-testid="client-notes-card">
+    <div class="pane-title" style="display: flex; justify-content: space-between; align-items: center;">
+      <span>Notas de Seguimiento ({{ client.notes|length }})</span>
+    </div>
+
+    <!-- Formulario para Agregar Nota -->
+    <form 
+      method="POST" 
+      action="/clients/{{ client.id }}/notes" 
+      data-testid="add-note-form"
+      style="margin-bottom: 1.25rem;"
+      novalidate
+    >
+      <div class="form-group">
+        <label for="note-content">Nueva nota:</label>
+        <textarea 
+          id="note-content"
+          name="content" 
+          rows="3" 
+          class="{% if errors and errors.content %}is-invalid{% endif %}"
+          placeholder="Escriba aquí la nota de seguimiento..."
+          data-testid="input-note-content"
+        >{{ note_content|default('', true) }}</textarea>
+        {% if errors and errors.content %}
+          <span class="error-text" data-testid="error-note-content">{{ errors.content }}</span>
+        {% endif %}
+      </div>
+      <button type="submit" class="btn btn-primary" data-testid="btn-submit-note">
+        Guardar Nota
+      </button>
+    </form>
+
+    <!-- Listado de Notas -->
+    <div class="notes-section" data-testid="notes-list">
+      {% if client.notes and client.notes|length > 0 %}
+        {% for note in client.notes %}
+          <div class="note-item" data-testid="note-item-{{ note.id }}">
+            <div class="note-meta">
+              <span data-testid="note-date-{{ note.id }}">
+                {{ note.created_at.strftime('%Y-%m-%d %H:%M:%S') if note.created_at else '-' }} UTC
+              </span>
+              <form 
+                method="POST" 
+                action="/clients/{{ client.id }}/notes/{{ note.id }}/delete" 
+                onsubmit="return confirm('¿Eliminar esta nota permanentemente?');"
+                style="display: inline;"
+              >
+                <button 
+                  type="submit" 
+                  class="btn btn-danger" 
+                  style="padding: 1px 6px; font-size: 11px;"
+                  data-testid="delete-note-{{ note.id }}"
+                >
+                  Eliminar
+                </button>
+              </form>
+            </div>
+            <div class="note-body" data-testid="note-text-{{ note.id }}">{{ note.content }}</div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div data-testid="empty-notes-state" style="color: #666666; font-style: italic; font-size: 13px; padding: 0.5rem 0;">
+          No hay notas registradas para este cliente.
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

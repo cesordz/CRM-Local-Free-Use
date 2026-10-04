@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Mini CRM{% endblock %} - Terminal Edition</title>
+  
+  <!-- CSS Puro Local (Sin CDN ni Google Fonts) -->
+  <link rel="stylesheet" href="/static/style.css">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <!-- Barra Superior Mínima -->
+  <nav class="topbar" data-testid="main-navbar">
+    <div class="container topbar-content">
+      <a href="/clients" class="app-title" data-testid="nav-brand-link">CRM_LOCAL [v1.0]</a>
+      <div class="nav-links">
+        <a href="/clients" data-testid="nav-clients-link">Directorio</a>
+        <a href="/clients/new" data-testid="nav-new-client-btn">Nuevo Cliente</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenedor Principal (Máximo 1000px centrado) -->
+  <main class="container">
+    {% include "components/alerts.html" %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Pie de Página Sobrio -->
+  <footer class="minimal-footer" data-testid="main-footer">
+    <div class="container">
+      CRM Local &bull; Interfaz Utilitaria para Pruebas de Software QA &bull; Cascadia Mono
+    </div>
+  </footer>
+
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

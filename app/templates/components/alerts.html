@@ -1,0 +1,11 @@
+{% if success_message %}
+<div class="alert-box alert-success" data-testid="alert-success">
+  <span data-testid="alert-success-text">[OK] {{ success_message }}</span>
+</div>
+{% endif %}
+
+{% if error_message %}
+<div class="alert-box alert-error" data-testid="alert-error">
+  <span data-testid="alert-error-text">[ERROR] {{ error_message }}</span>
+</div>
+{% endif %}
